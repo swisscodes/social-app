@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+    <div class="form-wrapper">
+      <form class="for-form" action="" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <div class="form-p">
+       {{ form }}
+      <button class="hover-btn" type="submit", value="Login">Login</button>
+      </div>
+      </form>
+    </div>
+{% endblock content%}
+
+
+
+ <span><i class="far fa-user fa-lg">
+ <span><i class="fas fa-key fa-lg">

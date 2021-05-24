@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/base.css" %}?{% now "U" %}">
+
+    <title>{% block title %}Base{% endblock title %}</title>
+</head>
+<body>
+    <header class="menu-btn-wrapper">
+      <nav>
+          <h2 class="nav-h2">SWISSCODES</h2>
+          <div class="link-menu">
+            <a href="#" class="is-active">Home</a>
+            <a href="#">Contact</a>
+            <a href="#">About</a>
+            <a href="#">Projects</a>
+          </div>
+          <button class="burger-button">
+            <span class="bar-span"></span>
+            <span class="bar-span"></span>
+            <span class="bar-span"></span>
+          </button>
+      </nav>
+    </header>
+
+<div class="spacer">
+    &nbsp;
+</div>
+
+    <div class="base-wrapper">
+      {% block content %}
+      {% endblock content %}
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+<script
+  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+  crossorigin="anonymous"></script>
+<script src="{% static "js/base.js" %}?{% now "U" %}"></script>
+</body>
+</html>

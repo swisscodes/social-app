@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome Social{% endblock title %}
+
+{% block content%}
+{% if user.is_authenticated %}
+ <div class="home-msg"><h1>Welcome {{user.email}}</h1></div>
+  <a href="{% url "logout" %}"><button class="hover-btn">Logout</button></a>
+
+{% else %}
+  <div class="home-msg"><h1>Welcome guest</h1></div>
+  <a href="{% url "accounts:login" %}"><button class="hover-btn">Login</button></a>
+{% endif %}
+{% endblock content%}

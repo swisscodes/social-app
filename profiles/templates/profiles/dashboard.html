@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if user.user_profile.first_name %}
+    Welcome to your dashboard {{user.user_profile.first_name}}
+{% elif user.user_profile.username  %}
+    Welcome to your dashboard {{user.user_profile.username}}
+{% else %}
+    Welcome to your dashboard {{user.email}}
+{% endif %}
+{% endblock title %}
+
+
+{% block content %}
+
+{% if user.user_profile.first_name %}
+    <h1>Welcome to your dashboard {{user.user_profile.first_name}}</h1>
+{% elif user.user_profile.username  %}
+    <h1>Welcome to your dashboard {{user.user_profile.username}}</h1>
+{% else %}
+    <h1>Welcome to your dashboard {{user.email}}</h1>
+{% endif %}
+
+{% endblock content %}
