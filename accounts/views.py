@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -28,7 +28,9 @@ def login_page(request):
                 if user is not None:
                     if user.is_active:
                         login(request, user)
-                        print(request.session.__dict__)
+                        next = request.POST.get("next")
+                        if next:
+                            return redirect(next)
                         return redirect("home")
                     else:
                         return HttpResponse("Disabled account")
@@ -91,4 +93,7 @@ def home_page(request):
 
 
 def logout_page(request):
-    return render(request, "registration/logout.html")
+    logged_user = request.user
+    context = {"logged_user": logged_user}
+    logout(request)
+    return render(request, "registration/logout.html", context)

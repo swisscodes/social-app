@@ -3,16 +3,20 @@
 {% block title %}Login{% endblock title %}
 
 {% block content %}
+{% if user.is_authenticated %}
+  <p>You are already logged in</p>
+{% else %}
     <div class="form-wrapper">
       <form class="for-form" action="" method="POST">
       {% csrf_token %}
-      <input type="hidden" name="next" value="{{ next }}" />
+      <input type="hidden" name="next" value="{{ request.GET.next  }}" />
       <div class="form-p">
        {{ form }}
       <button class="hover-btn" type="submit", value="Login">Login</button>
       </div>
       </form>
     </div>
+  {% endif %}
 {% endblock content%}
 
 

@@ -6,4 +6,5 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def dashboard(request):
-    return render(request, "profiles/dashboard.html")
+    context = {"section": "dashboard"}
+    return render(request, "profiles/dashboard.html", context)

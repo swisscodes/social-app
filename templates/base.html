@@ -13,18 +13,24 @@
 <body>
     <header class="menu-btn-wrapper">
       <nav>
-          <h2 class="nav-h2">SWISSCODES</h2>
+          <h2 class="nav-h2"><a href="{% url "home" %}">SWISSCODES</h2></a>
+          {% if user.is_authenticated%}
           <div class="link-menu">
-            <a href="#" class="is-active">Home</a>
-            <a href="#">Contact</a>
-            <a href="#">About</a>
-            <a href="#">Projects</a>
+            <a href="{% url "home" %}" class="{% if section == "home" %}is-active {% endif %}hi">Home</a>
+            <a href="{% url "profiles:dashboard" %}" class="{% if section == "dashboard" %}is-active {% endif %}hi">Dashboard</a>
+            <a href="#images">Images</a>
+            <a href="#">People</a>
+            <div class="logout-div">Hi {{user.user_profile.username}}<a href="{% url "logout" %}">Logout</a></div>
           </div>
           <button class="burger-button">
             <span class="bar-span"></span>
             <span class="bar-span"></span>
             <span class="bar-span"></span>
           </button>
+
+          {% else %}
+            <div class="logout-div-no-nuser"><a href="{% url "accounts:login" %}"><button class="hover-btn">Login</button></a>
+          {% endif %}
       </nav>
     </header>
 

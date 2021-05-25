@@ -40,6 +40,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # My apps for accounts
+    "accounts",
+    # top so django uses this first
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,7 +52,6 @@ INSTALLED_APPS = [
     # 3rd party apps
     "debug_toolbar",
     # My apps
-    "accounts",
     "profiles",
 ]
 
@@ -142,7 +144,9 @@ STATIC_ROOT = BASE_DIR / "staticfiles/"  # django collects all static files here
 
 
 # MEDIA
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
