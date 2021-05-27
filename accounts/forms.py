@@ -2,9 +2,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.forms.widgets import DateInput, Input
-from .models import User, Person_profile
-from django.utils.html import format_html
+from .models import User
 
 
 class LoginForm(forms.Form):
@@ -42,7 +40,7 @@ class CustomUserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super().save(commit=False)
+        user = super().save(commit=False)  # returns and instance of User
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
@@ -55,27 +53,3 @@ class CustomUserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("email", "password", "is_active", "is_admin")
-
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Person_profile
-        fields = (
-            "username",
-            "first_name",
-            "last_name",
-            "date_of_birth",
-            "country",
-            "state",
-            "city",
-            "address1",
-            "address2",
-            "phone",
-            "zipcode",
-            "photo",
-        )
-
-        widgets = {
-            "phone": Input(attrs={"type": "tel", "placeholder": "204873623"}),
-            "date_of_birth": DateInput(attrs={"type": "date"}),
-        }

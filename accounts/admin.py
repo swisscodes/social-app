@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from accounts.models import User, Person_profile
+from accounts.models import User
 from accounts.forms import CustomUserChangeForm, CustomUserCreationForm
 
 
@@ -44,11 +44,3 @@ admin.site.register(User, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
-
-
-@admin.register(Person_profile)
-class Person_profileAdmin(admin.ModelAdmin):
-    list_display = (
-        "user",
-        "username",
-    )

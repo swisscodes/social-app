@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.user_profile.nickname }} edit ur profile{% endblock title %}
+
+
+{% block content %}
+
+<div class="form-wrapper">
+  <form class="for-form" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-p">
+    {% for msg in messages %}
+      <div class="error-div"><span>{{msg}}</span></div>
+    {% endfor %}
+      {{form}}
+      <div>
+        <button class="hover-btn" type="save" name="save" value="save">Save</button>
+        <a href="{% url "profiles:dashboard" %}"><button class="hover-btn">Cancel</button></a>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

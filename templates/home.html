@@ -10,5 +10,6 @@
 {% else %}
   <div class="home-msg"><h1>Welcome guest</h1></div>
   <a href="{% url "accounts:login" %}"><button class="hover-btn">Login</button></a>
+  <p>Dont have an account? <a href="{% url "accounts:signup" %}"><button class="hover-btn">Sign up</button></a></p>
 {% endif %}
 {% endblock content%}

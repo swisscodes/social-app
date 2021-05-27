@@ -12,7 +12,9 @@
 
 
 {% block content %}
-
+{% for msg in messages %}
+<div class="error-div"><span>{{msg}}</span></div>
+{% endfor %}
 {% if user.user_profile.first_name %}
     <h1>Welcome to your dashboard {{user.user_profile.first_name}}</h1>
 {% elif user.user_profile.username  %}

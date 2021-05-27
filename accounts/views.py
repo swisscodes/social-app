@@ -1,25 +1,27 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
-from .forms import ProfileForm, LoginForm
-from .models import User
+from profiles.forms import ProfileForm
+from .forms import LoginForm, CustomUserCreationForm
 
 # Create your views here.
 
 
 def login_page(request):
+    form = LoginForm(request.POST or None)
     if request.method == "POST":
-        form = LoginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             user_field = None
             try:
-                user_field = User.objects.get(user_profile__username=cd["username"])
-            except User.DoesNotExist:
+                user_field = get_user_model().objects.get(
+                    user_profile__nickname=cd["username"]
+                )
+            except get_user_model().DoesNotExist:
                 try:
-                    user_field = User.objects.get(email=cd["username"])
-                except User.DoesNotExist:
+                    user_field = get_user_model().objects.get(email=cd["username"])
+                except get_user_model().DoesNotExist:
                     pass
             if user_field:
                 user = authenticate(
@@ -49,18 +51,30 @@ def login_page(request):
                         )
                     return render(request, "registration/login.html", {"form": form})
             else:
-                messages.error(
-                    request, "Please check your username and or Email is correct"
-                )
+                messages.error(request, "No user account found")
                 return render(request, "registration/login.html", {"form": form})
     else:
-        form = LoginForm()
-        return render(request, "registration/login.html", {"form": form})
+        section = "login"
+        context = {"form": form, "section": section}
+        return render(request, "registration/login.html", context)
+
+
+def sign_up(request):
+    form = CustomUserCreationForm(request.POST or None)
+    if request.method == "POST":
+        new_signed_up = CustomUserCreationForm(request.POST)
+        if new_signed_up.is_valid():
+            new_signed_up.save()
+            context = {"new_signed_up": new_signed_up}
+            return render(request, "registration/register_done.html")
+    section = "signup"
+    context = {"form": form, "section": section}
+    return render(request, "registration/register.html", context)
 
 
 def profile_page(request, pk):
     if request.method == "POST":
-        this_user = User.objects.get(pk=pk)
+        this_user = get_user_model().objects.get(pk=pk)
         if request.user == this_user:
             profile = ProfileForm(request.POST)
             if profile.is_valid():
@@ -79,7 +93,7 @@ def profile_page(request, pk):
                         "zipcode": cd["zipcode"],
                     },
                 )
-                User.objects.filter(email=request.user).update(
+                get_user_model().objects.filter(email=request.user).update(
                     username=cd["username"],
                     first_name=cd["first_name"],
                     last_name=cd["last_name"],

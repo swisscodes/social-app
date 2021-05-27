@@ -11,15 +11,15 @@
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.GET.next  }}" />
       <div class="form-p">
+      {% for msg in messages %}
+      <div class="error-div"><span>{{msg}}</span></div>
+      {% endfor %}
        {{ form }}
       <button class="hover-btn" type="submit", value="Login">Login</button>
+      <a href="{% url "password_reset" %}">Forgotten your password?</a>
       </div>
       </form>
     </div>
-  {% endif %}
-{% endblock content%}
+{% endif %}
 
-
-
- <span><i class="far fa-user fa-lg">
- <span><i class="fas fa-key fa-lg">
+{% endblock content %}

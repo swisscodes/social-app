@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Sign up{% endblock title %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+  <p> You are already a member signout to create a new account <a href="{% url "logout" %}"><button class="hover-btn">Logout</button></a></p>
+{% else %}
+  <div class="form-wrapper">
+    <form class="for-form" action="" method="POST">
+        <div class="form-p">
+          {% csrf_token %}
+          {{form}}
+          <button class="hover-btn" type="submit", value="Login">Sign up</button>
+        </div>
+      </form>
+  </div>
+{% endif %}
+{% endblock content %}
