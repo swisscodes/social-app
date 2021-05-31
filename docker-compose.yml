@@ -5,18 +5,26 @@ services:
   web:
     build: .
     command: python /social-docker/manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/social-docker
+    container_name: social-web
     ports:
       - 8000:8000
+    volumes:
+      - /staticfiles:/staticfiles/
+    env_file:
+      - ./config/.env
     depends_on:
       - db
   db:
     image: postgres
+    container_name: social-docker-db
     volumes:
       - ./data/db:/var/lib/postgresql/data/
     environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+        
 
 volumes:
   postgres_data:
+  staticfiles:

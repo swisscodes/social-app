@@ -9,7 +9,8 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /social-docker
 
 # Install dependencies
-COPY Pipfile Pipfile.lock /social-docker/
+COPY Pipfile Pipfile.lock requirements.txt /social-docker/
+RUN pip install -r requirements.txt
 RUN pip install pipenv && pipenv install --system
 
 # Copy project

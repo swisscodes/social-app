@@ -34,7 +34,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["mysite.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party apps
     "debug_toolbar",
+    "social_django",
+    "django_extensions",
     # My apps
     "profiles",
 ]
