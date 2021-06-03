@@ -18,7 +18,7 @@ body {
     font-family: 'Lato', sans-serif;
     font-family: 'Poppins', sans-serif;
     font-family: 'Farro', sans-serif;
-    color:#212121;
+    color: azure;
 }
 
 
@@ -28,82 +28,48 @@ body {
     
   }
 
-a.no-deco {
-    text-decoration: none;
-}
-
-.base-wrapper {
-      min-height: 75vh;
-  }
-
-.logout-div {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-}
-
-.logout-div-no-nuser {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-.logout-span {
-    color: #077ef5;
-}
-
-.menu-btn-wrapper {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: fit-content;
-}
-
-nav {
-     display:grid;
-     grid-template-columns: 1fr 1fr;
-     grid-template-rows: auto;
+ nav {
+     position: fixed;
+     top: 0;
+     left: 0px;
+     right: 0px;
+     padding: 16px 32px;
+     z-index: 99;
      background-color: var(--dark);
      border-bottom: 3px solid var(--primary);
-     height: fit-content;
-     padding: 13px;
- }
-
- .nav-h2 a {
-     text-decoration: none;
-     cursor: pointer;
-     
- }
-
- .nav-h2 a:hover {
-    background-color: var(--light);
  }
 
  .nav-h2 {
-     grid-column: 1;
-     grid-row: 1;
      font-size: 28px;
      font-weight: 900;
      letter-spacing: 2px;
      text-transform: uppercase;
  }
 
+ /*.drop-it {
+     
+ }*/
 
-
-
-.link-menu {
-    grid-row: 2;
-    grid-column: 1 / span 2;
-    display: none;
-    flex-flow: column wrap;
-    align-items: center;
-    align-self:center;
-    justify-content:space-evenly;
-    gap: 5px;
-    height: 50vh;
+ .spacer
+{
+    width: 100%;
+    height: 75px;
 }
 
-.drop-it {
+
+.menu-burger-container {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.link-menu {
+    display: none;
+    flex: 1 1 0%;
+    justify-content: flex-end;
+    margin: 0 -16px;
 }
 
 .link-menu a {
@@ -122,15 +88,14 @@ nav {
 }
 
 .burger-button {
-    grid-column: 2;
-    grid-row: 1;
+    display: block;
+    position: relative;
+    z-index: 1;
     user-select: none;
     appearance: none;
     border: none;
     background: none;
     cursor: pointer;
-    margin-left: auto;
-    padding-right: 18px;
 }
 
 .burger-button span {
@@ -172,30 +137,30 @@ nav {
 
 
 .form-wrapper {
-    /*background-color: rgb(225, 188, 235)*/
+    background-color: rgb(225, 188, 235);
     display: flex;
     justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .for-form {
-    min-height: 100vh;
+    height: 90vh;
     width: 90vw;
     display: flex;
-    background-color: #ccc3c3;
-    align-items:center;
+    background-color: #a79292;
+    align-items:center ;
 }
 
 
 .form-p {
     display: flex;
-    height: fit-content;
     width: 100%;
     flex-flow:column wrap;
     gap: 5px;
     align-content: center;
     align-items: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
 }
 
 .form-p button {
@@ -206,9 +171,6 @@ nav {
     font-size: 16px;
     border-radius: 3px;
     cursor: pointer;
-    outline-style:solid;
-    outline-color: #c7aeae;
-    
 }
 
 .form-p input {
@@ -217,20 +179,6 @@ nav {
     background-color: rgb(225, 188, 235);
     outline-color: #3996f3;
     
-}
-
-.blog-footer {
-    display: flex;
-    background-color: darkslategrey;
-    color: whitesmoke;
-    height: 100px;
-    justify-content: center;
-    align-items: center;
-}
-
-form img {
-    width: 100%;
-    height: auto;
 }
 
 
@@ -263,45 +211,19 @@ a button {
     text-align: center;
 }
 
-form ul li {
-    color: #FF5252;
-    list-style-type: none;
-}
-
-.error-div {
-    color: #FF5252;
-}
-
 
 
 
 
   /**************************LAPTOP SCREEN MEDIA SCREEN @ *******************/
-  @media only screen and (min-width: 1043px) {
-    /*body {
-    }*/
-
+  @media only screen and (min-width: 380px) {
+    body {
+      background-color: lightblue;
+    }
     .burger-button {
         display: none;
     }
     .link-menu {
-        height: fit-content;
-        flex-flow: row nowrap;
-        grid-row: 1;
-        grid-column: 2;
         display: flex;
-        align-items: center;
-        align-self:center;
-        justify-content:space-evenly;
-        gap: 5px;
     }
-
-    .for-form {
-        width: 50%;
-    }
-
-    .for-form input {
-        width: 60%;
-
-    }
-}
+  }

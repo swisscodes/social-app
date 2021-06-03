@@ -14,7 +14,7 @@ class Person_profile(models.Model):
     first_name = models.CharField(max_length=40, null=True, blank=True)
     last_name = models.CharField(max_length=40, null=True, blank=True)
     nickname = models.CharField(max_length=30, unique=True, null=True, blank=True)
-    photo = models.ImageField(upload_to="users/%Y/%m/%d", blank=True, null=True)
+    photo = models.ImageField(upload_to="media/users/%Y/%m/%d", blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     country = models.CharField(max_length=40, null=True, blank=True)
     state = models.CharField(max_length=50, null=True, blank=True)

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Images{% endblock title %}
+
+{% block content %}
+
+<div class="form-wrapper">
+  <form class="for-form" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-p">
+      <img src="{{ request.GET.url }}" class="image-preview">
+      {{form}}
+      <button class="hover-btn" type="submit", value="Login">Upload</button>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

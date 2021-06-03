@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{this_image.title}}{% endblock title %}
+
+{% block content %}
+  <h1>{{this_image.title}}</h1>
+  <img src="{{ this_image.url }}" class="image-detail">
+
+  {% with total_likes=this_image.users_like.count %}
+  <div class="image-info">
+    <div>
+      <span class="count">
+        {{ total_likes }} like{{ total_likes|pluralize }}
+      </span>
+    </div>
+    {{ this_image.description|linebreaks }}
+  </div>
+
+  <div class="image-likes">
+    {% for user in this_image.users_like.all %}
+    <div>
+      <img src="{{ user.user_profile.photo.url }}">
+      <p>{{ user.user_profile.first_name }}</p>
+    </div>
+    {% empty %}
+      <p>Nobody likes this image yet.</p>
+    {% endfor %}
+    </div>
+
+{% endwith %}
+{% endblock content %}

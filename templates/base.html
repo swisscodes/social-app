@@ -19,9 +19,9 @@
           <h2 class="nav-h2"><a href="{% url "home" %}">SWISSCODES</h2></a>
           {% if user.is_authenticated%}
           <div class="link-menu">
-            <a href="{% url "home" %}" class="{% if section == "home" %}is-active {% endif %}hi">Home</a>
-            <a href="{% url "profiles:dashboard" %}" class="{% if section == "dashboard" %}is-active {% endif %}hi">Dashboard</a>
-            <a href="#images">Images</a>
+            <a class="{% if section == "home" %}is-active {% endif %}hi" href="{% url "home" %}">Home</a>
+            <a class="{% if section == "dashboard" %}is-active {% endif %}hi" href="{% url "profiles:dashboard" %}">Dashboard</a>
+            <a  class="{% if section == "images" %}is-active {% endif %}hi" href="{% url "images:image_detail" %}">Images</a>
             <a href="#">People</a>
             <div class="logout-div">
              <a href="{% url "profiles:edit_profiles" %}">edit</a>

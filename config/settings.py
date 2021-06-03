@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "django_extensions",
     # My apps
     "profiles",
+    "images",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -123,6 +124,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "social_core.backends.facebook.FacebookOAuth2",
+    "social_core.backends.twitter.TwitterOAuth",
+    "social_core.backends.google.GoogleOAuth2",
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = "121457490005784"  # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = "a29dacfa3669079091465fd44a7d5200"  # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ["email"]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "757050682947-j14u390ds1udjrsp9k1au80foe6es1dv.apps.googleusercontent.com"  # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "FQ8CbiW7IefjtoZTd-AXYf0A"  # Google Consumer Secret
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -142,12 +158,14 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static/"]  # routes to search for static files
-STATIC_ROOT = BASE_DIR / "staticfiles/"  # django collects all static files here
+STATIC_ROOT = os.path.join(
+    BASE_DIR, "staticfiles/"
+)  # django collects all static files here
 
 
 # MEDIA
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 
 # EMAIL SETTINGS
@@ -174,6 +192,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+
+SITE_ID = 1
 
 if DEBUG == False:
     SESSION_COOKIE_SECURE = True

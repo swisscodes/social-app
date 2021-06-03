@@ -28,6 +28,7 @@ urlpatterns = [
     path("__debug__/", include(debug_toolbar.urls)),
     path("profiles/", include("profiles.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("images/", include("images.urls")),
     path("social-auth/", include("social_django.urls", namespace="social")),
 ]
 
