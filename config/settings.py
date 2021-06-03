@@ -131,12 +131,16 @@ AUTHENTICATION_BACKENDS = (
     "social_core.backends.google.GoogleOAuth2",
 )
 
-SOCIAL_AUTH_FACEBOOK_KEY = "121457490005784"  # Facebook App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = "a29dacfa3669079091465fd44a7d5200"  # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = env("FACEKEY")  # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = env("SOCIAL_AUTH_FACEBOOK_SECRET")  # Facebook App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ["email"]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "757050682947-j14u390ds1udjrsp9k1au80foe6es1dv.apps.googleusercontent.com"  # Google Consumer Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "FQ8CbiW7IefjtoZTd-AXYf0A"  # Google Consumer Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env(
+    "SOCIAL_AUTH_GOOGLE_OAUTH2_KEY"
+)  # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env(
+    "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"
+)  # Google Consumer Secret
 
 
 # Internationalization
