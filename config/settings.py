@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "social_django",
     "django_extensions",
+    "easy_thumbnails",
     # My apps
     "profiles",
     "images",

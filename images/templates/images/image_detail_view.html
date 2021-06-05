@@ -3,23 +3,50 @@
 {% block title %}{{this_image.title}}{% endblock title %}
 
 {% block content %}
-  <h1>{{this_image.title}}</h1>
-  <img src="{{ this_image.url }}" class="image-detail">
 
-  {% with total_likes=this_image.users_like.count %}
+<div class="detail-wrapper">
+{% if messages %}
+  {% for msg in messages %}
+  <div class="success-messages">{{msg}}</div>
+  {% endfor %}
+{% endif %}
+
+  <h1 class="detail-h1">{{this_image.title}}</h1>
+  {% load thumbnail %}
+    <a href="{{ this_image.url }}">
+      <img src="{% thumbnail this_image.image 300x0 %}" class="image-detail">
+      <img src="{{ this_image.url }}" class="image-detail">
+    </a>
+
+  {% with total_likes=this_image.users_like.count users_like=this_image.users_like.all %}
   <div class="image-info">
     <div>
       <span class="count">
-        {{ total_likes }} like{{ total_likes|pluralize }}
+        <a href="#" data-id="{{ this_image.id }}"
+        data-action="{% if request.user in users_like %}un{% endif %}like"
+        class="like like-button">
+        {% if request.user not in users_like %}
+          <button class="detail-like-btn success like-btn">
+          <i class="far fa-thumbs-up fa-2x"></i>
+          <p>{{ total_likes }} like{% if total_likes > 1 %}{{ total_likes|pluralize }}{% endif %}</p>
+        </button>
+        {% else %}
+        <button class="detail-like-btn success dislike-btn">
+          <i class="far fa-thumbs-down fa-2x"></i>
+          {{ total_likes }} like{% if total_likes > 1 %}{{ total_likes|pluralize }}{% endif %}<br>
+          Unlike
+        </button>
+        {% endif %}
+        </a>
       </span>
     </div>
     {{ this_image.description|linebreaks }}
   </div>
 
   <div class="image-likes">
-    {% for user in this_image.users_like.all %}
+    {% for user in users_like %}
     <div>
-      <img src="{{ user.user_profile.photo.url }}">
+      <img src="{{ user.user_profile.photo }}">
       <p>{{ user.user_profile.first_name }}</p>
     </div>
     {% empty %}
@@ -28,4 +55,31 @@
     </div>
 
 {% endwith %}
+</div>
+
 {% endblock content %}
+
+{% block domready %}
+  $('a.like').click(function(e){
+    e.preventDefault();
+    $.post("{% url "images:like" %}",
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+      },
+      function(data){
+        if (data['status'] == 'ok')
+        {
+          var previous_action = $('a.like').data('action');
+
+          // toggle data-action
+          $('a.like').data('action', previous_action == 'like' ?
+          'unlike' : 'like');
+
+          // toggle link text
+          $('a.like').load(location.href + " .like");
+        }
+      }
+    );
+  });
+{% endblock domready %}

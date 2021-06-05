@@ -2,6 +2,7 @@
     --primary:#8c38ff;
     --light: #EEEEEE;
     --dark: #212121;
+    --success: #04aa6d;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Farro:wght@300&family=Lato&family=Poppins:wght@300&display=swap');
@@ -33,7 +34,7 @@ a.no-deco {
 }
 
 .base-wrapper {
-      min-height: 75vh;
+      min-height: 100vh;
   }
 
 .logout-div {
@@ -273,8 +274,66 @@ form ul li {
 }
 
 
+/*************************IMAGES APP CSS SETTINGS***************************************/
+.detail-wrapper {
+    margin: 15px;
+}
 
+.detail-like-btn {
+    border: 2px solid black;
+    background-color: whitesmoke;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    gap:3px;
+}
 
+.success {
+    border-color: var(--success);
+    color: green;
+    border-radius: 8px;
+}
+
+.success:hover {
+    background-color: var(--success);
+    color: whitesmoke;
+    border-color: rgb(225, 238, 46);
+}
+
+.detail-h1 {
+    border-bottom: 1px solid var(--success);
+    margin-bottom: 5px;
+}
+
+.success-messages {
+    display: flex;
+    background-color: var(--success);
+    color: whitesmoke;
+    width: 50%;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+a.like {
+    display: contents;
+}
+
+a.like-button {
+    text-decoration: none;
+}
+
+.image {
+   display: flex;
+   flex-flow: column wrap;
+   border: 1px solid var(--primary);
+   margin: 10px;
+   width: fit-content;
+   justify-content: center;
+}
 
   /**************************LAPTOP SCREEN MEDIA SCREEN @ *******************/
   @media only screen and (min-width: 1043px) {
@@ -303,5 +362,10 @@ form ul li {
     .for-form input {
         width: 60%;
 
+    }
+
+    #image-list-div {
+        display: flex;
+        flex-flow: wrap;
     }
 }

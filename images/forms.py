@@ -21,7 +21,7 @@ class ImageForm(forms.ModelForm):
                 raise forms.ValidationError(
                     "The given URL does not " "match valid image extensions."
                 )
-                return url
+            return url
 
         def save(self, force_insert=False, force_update=False, commit=True):
             image = super().save(commit=False)
@@ -30,8 +30,9 @@ class ImageForm(forms.ModelForm):
             extension = image_url.rsplit(".", 1)[1].lower()
             image_name = f"{name}.{extension}"
             # download image from the given URL
-            response = request.urlopen(image_url)
-            image.save(image_name, ContentFile(response.read()), save=False)
+            header = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)"}
+            response = request.urlopen(image_url, header)
+            image.image.save(image_name, ContentFile(response.read()), save=False)
             if commit:
                 image.save()
             return image

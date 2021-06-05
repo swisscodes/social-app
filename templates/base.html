@@ -21,7 +21,7 @@
           <div class="link-menu">
             <a class="{% if section == "home" %}is-active {% endif %}hi" href="{% url "home" %}">Home</a>
             <a class="{% if section == "dashboard" %}is-active {% endif %}hi" href="{% url "profiles:dashboard" %}">Dashboard</a>
-            <a  class="{% if section == "images" %}is-active {% endif %}hi" href="{% url "images:image_detail" %}">Images</a>
+            <a  class="{% if section == "images" %}is-active {% endif %}hi" href="{% url "images:list_view" %}">Images</a>
             <a href="#">People</a>
             <div class="logout-div">
              <a href="{% url "profiles:edit_profiles" %}">edit</a>
@@ -63,10 +63,30 @@
     </div>
   </div>
     <!-- JavaScript Bundle with Popper -->
-<script
-  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+crossorigin="anonymous">
+</script>
 <script src="{% static "js/base.js" %}?{% now "U" %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+  <script>
+    var csrftoken = Cookies.get('csrftoken');
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+
+    $(document).ready(function(){
+      {% block domready %}
+      {% endblock %}
+    });
+  </script>
 </body>
 </html>
