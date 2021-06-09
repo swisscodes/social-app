@@ -66,7 +66,7 @@ def sign_up(request):
         new_signed_up = CustomUserCreationForm(request.POST)
         if new_signed_up.is_valid():
             new_signed_up.save()
-            create_action(new_signed_up, "has created an account")
+
             context = {"new_signed_up": new_signed_up}
             return render(request, "registration/register_done.html")
     section = "signup"
