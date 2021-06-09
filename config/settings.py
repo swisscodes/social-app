@@ -35,8 +35,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = ["mysite.com", "localhost", "127.0.0.1"]
-
+ALLOWED_HOSTS = ["mysite.com", "localhost", "127.0.0.1", ".herokuapp.com"]
 
 # Application definition
 
@@ -49,6 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    # 3rd party app needed to be added before django.contrib.staticfiles
+    "whitenoise.runserver_nostatic",
+    ###########################################
     "django.contrib.staticfiles",
     # 3rd party apps
     "debug_toolbar",
@@ -69,6 +71,9 @@ MIDDLEWARE = [
     # 3rd Party Middleware
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # 3rd Party Middleware
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # 3rd Party Middleware
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -174,6 +179,7 @@ STATICFILES_DIRS = [BASE_DIR / "static/"]  # routes to search for static files
 STATIC_ROOT = os.path.join(
     BASE_DIR, "staticfiles/"
 )  # django collects all static files here
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # MEDIA
