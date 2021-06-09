@@ -4,6 +4,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from profiles.forms import ProfileForm
 from .forms import LoginForm, CustomUserCreationForm
+from actions.utils import create_action
 
 # Create your views here.
 
@@ -27,7 +28,7 @@ def login_page(request):
                 user = authenticate(
                     request, username=user_field.email, password=cd["password"]
                 )
-                if user is not None:
+                if user:
                     if user.is_active:
                         login(request, user)
                         next = request.POST.get("next")
@@ -65,6 +66,7 @@ def sign_up(request):
         new_signed_up = CustomUserCreationForm(request.POST)
         if new_signed_up.is_valid():
             new_signed_up.save()
+            create_action(new_signed_up, "has created an account")
             context = {"new_signed_up": new_signed_up}
             return render(request, "registration/register_done.html")
     section = "signup"

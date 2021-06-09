@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+<!-- {% load images_tags %} Not using this one for now-->
+{% load thumbnail %}
+{% load static %}
+
+{% block title %}{{ this_user.user_profile.get_full_name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ this_user.user_profile.get_full_name }}</h1>
+  <div class="profile-info">
+  {% if this_user.user_profile.photo %}
+    <img src="{% thumbnail this_user.user_profile.photo 180x180 %}" class="user-detail">
+  {% else %}
+    <img src="{% static "img/profile_pic.jpg" %}" width="193" height="130">
+  {% endif %}
+  </div>
+
+{% with total_followers=this_user.rel_to.count %}
+  <span class="count">
+    <span class="total">{{ total_followers }}</span>
+      follower{{ total_followers|pluralize }}
+    </span>
+    
+    <a href="#" data-id="{{ this_user.id }}" data-action="{% if request.user in this_user.rel_to.all %}un{% endif %}follow" class="follow button">
+      {% if request.user == this_user %}
+        <!-- Do nothing -->
+      {% elif following %}
+        <button class="hover-btn follow-unfollow" type="submit", value="Login">Unfollow</button>
+      {% else %}
+        <button class="hover-btn follow-unfollow" type="submit", value="Login">Follow</button>
+      {% endif %}
+    </a>
+    
+  <div id="image-list-div" class="image-container">
+    {% include "images/list_ajax.html" with all_images=this_user.user_images.all %}
+  </div>
+
+{% endwith %}
+
+{% endblock content %}
+
+
+
+<!-- ajax call function for follow and unfollow -->
+{% block domready %}
+
+$('a.follow').click(function(e){
+
+e.preventDefault();
+
+$.post('{% url "profiles:user_follow" %}',
+
+{
+
+id: $(this).data('id'),
+
+action: $(this).data('action')
+
+},
+
+function(data){
+
+if (data['status'] == 'ok') {
+
+var previous_action = $('a.follow').data('action');
+
+// toggle data-action
+
+$('a.follow').data('action',
+
+previous_action == 'follow' ? 'unfollow' : 'follow');
+
+// toggle link text
+$('a.follow .follow-unfollow').text(previous_action == 'follow' ? 'Unfollow' : 'Follow');
+
+//
+//$('a.follow').load(location.href + " .follow");
+// update total followers
+
+var previous_followers = parseInt(
+
+$('span.count .total').text());
+
+$('span.count .total').text(previous_action == 'follow' ?
+
+previous_followers + 1 : previous_followers - 1);
+
+}
+
+}
+
+);
+
+});
+
+{% endblock %}

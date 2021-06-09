@@ -14,7 +14,7 @@ class Person_profile(models.Model):
     )
     first_name = models.CharField(max_length=40, null=True, blank=True)
     last_name = models.CharField(max_length=40, null=True, blank=True)
-    nickname = models.CharField(max_length=30, unique=True, null=True, blank=True)
+    nickname = models.CharField(max_length=30, unique=True, null=False, blank=False)
     photo = models.ImageField(upload_to="media/users/%Y/%m/%d", blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     country = models.CharField(max_length=40, null=True, blank=True)
@@ -37,8 +37,12 @@ class Person_profile(models.Model):
         else:
             return self.user.email
 
-    def get_profile(self):
-        return self.pk
+    def get_full_name(self):
+        is_un_named = self.first_name is None and self.last_name is None
+        if is_un_named:
+            return "Please set your first and last name in your profile"
+        else:
+            return f"{self.first_name} {self.last_name}"
 
     def get_absolute_url(self):
         return reverse("add_later", kwargs={"pk": self.pk})
@@ -46,6 +50,7 @@ class Person_profile(models.Model):
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_prolile_for_new_user(sender, created, instance, **kwarg):
+    nickname = instance.email.rsplit("@", 1)[0].lower()
     if created:
-        profile = Person_profile(user=instance)
+        profile = Person_profile(user=instance, nickname=nickname)
         profile.save()

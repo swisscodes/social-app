@@ -30,6 +30,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("images/", include("images.urls")),
     path("social-auth/", include("social_django.urls", namespace="social")),
+    path("actions/", include("actions.urls")),
 ]
 
 if settings.DEBUG:

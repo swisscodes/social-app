@@ -17,18 +17,18 @@
     <header class="menu-btn-wrapper">
       <nav>
           <h2 class="nav-h2"><a href="{% url "home" %}">SWISSCODES</h2></a>
-          {% if user.is_authenticated%}
+          {% if request.user.is_authenticated %}
           <div class="link-menu">
             <a class="{% if section == "home" %}is-active {% endif %}hi" href="{% url "home" %}">Home</a>
             <a class="{% if section == "dashboard" %}is-active {% endif %}hi" href="{% url "profiles:dashboard" %}">Dashboard</a>
             <a  class="{% if section == "images" %}is-active {% endif %}hi" href="{% url "images:list_view" %}">Images</a>
-            <a href="#">People</a>
+            <a  class="{% if section == "people" %}is-active {% endif %}hi" href="{% url "profiles:user_list" %}">People</a>
             <div class="logout-div">
              <a href="{% url "profiles:edit_profiles" %}">edit</a>
              <a href="{% url "password_change" %}">password</a>
             </div>
             <div class="logout-div">
-              <span class="logout-span">Hi {{user.user_profile.nickname}}</span>
+              <span class="logout-span">Hi {{request.user.user_profile.nickname}}</span>
               <a href="{% url "logout" %}">Logout</a>
             </div>
           </div>
@@ -52,6 +52,9 @@
       </nav>
     </header>
 
+    <div class="empty">
+    </div>
+
 
     <div class="base-wrapper">
       {% block content %}
@@ -59,7 +62,7 @@
     </div>
 
     <div class="footer-div">
-      <footer class="blog-footer">© {% current_year %} – Social app ⋅ Privacy Policy</footer>
+      <footer class="social-footer">© {% current_year %} – Social app ⋅ Privacy Policy</footer>
     </div>
   </div>
     <!-- JavaScript Bundle with Popper -->

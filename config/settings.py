@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.urls import reverse_lazy
 import environ
 
 env = environ.Env(
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     # My apps
     "profiles",
     "images",
+    "actions",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -143,6 +145,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env(
     "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"
 )  # Google Consumer Secret
 
+
+ABSOLUTE_URL_OVERRIDES = {
+    "accounts.user": lambda u: reverse_lazy(
+        "profiles:user_detail", args=[u.user_profile.nickname]
+    )
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

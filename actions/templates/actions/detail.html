@@ -1,0 +1,52 @@
+{% load thumbnail %}
+{% load static %}
+
+{% with user=action.user profile=action.user.user_profile %}
+
+<div class="action">
+  <div class="images">
+    {% if profile.photo %}
+      {% thumbnail profile.photo "80x80" crop="100%" as im %}
+      <a href="{{ user.get_absolute_url }}">
+        <img src="{{ im.url }}" alt="{{ user.get_full_name }}" class="item-img">
+      </a>
+    {% else %}
+      <a href="{{ user.get_absolute_url }}">
+        <img src="{{ im.url }}" alt="{{ user.get_full_name }}" class="item-img">
+        <img src="{% static "img/profile_pic.jpg" %}" alt="{{ user.get_full_name }}" class="item-img"  width="193" height="130">
+      </a>
+    {% endif %}
+
+    {% if action.target %}
+      {% with target=action.target %}
+        {% if target.image %}
+          {% thumbnail target.image "80x80" crop="100%" as im %}
+          <a href="{{ target.get_absolute_url }}">
+            <img src="{{ im.url }}" class="item-img">
+            <img src="{{ im.url }}" class="item-img">
+          </a>
+        {% endif %}
+      {% endwith %}
+    {% endif %}
+  </div>
+  
+  <div class="info">
+    <p>
+      <span class="date">{{ action.created|timesince }} ago</span>
+      <br />
+      <a href="{{ user.get_absolute_url }}">
+        {{ user.user_profile.nickname }}
+      </a>
+    
+      {{ action.verb }}
+      {% if action.target %}
+        {% with target=action.target %}
+          <a href="{{ target.get_absolute_url }}">{{ target }}</a>
+        {% endwith %}
+      {% endif %}
+    </p>
+  </div>
+
+</div>
+
+{% endwith %}

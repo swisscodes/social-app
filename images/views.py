@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.core import paginator
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
@@ -10,6 +9,7 @@ from .models import Image
 from common.decorators import ajax_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from actions.utils import create_action
 
 # Create your views here.
 
@@ -17,7 +17,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required
 def image_list_view(request):
     all_images = Image.objects.all().order_by("-created")
-    paginator = Paginator(all_images, 8)
+    paginator = Paginator(all_images, 10)
     page = request.GET.get("page")
 
     try:
@@ -49,6 +49,7 @@ def image_post_get(request):
             new_item = form.save(commit=False)
             new_item.user = request.user
             new_item.save()
+            create_action(request.user, "bookmarked image", new_item)
             section = "images"
             context = {
                 "form": form,
@@ -90,8 +91,10 @@ def image_like(request):
             this_image = Image.objects.get(id=image_id)
             if action == "like":
                 this_image.users_like.add(request.user)
+                create_action(request.user, "likes", this_image)
             else:
                 this_image.users_like.remove(request.user)
+                create_action(request.user, "Unlikes", this_image)
             return JsonResponse({"status": "ok"})
         except:
             pass

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load thumbnail %}
 
 {% block title %}
 {% if user.user_profile.first_name %}
@@ -23,7 +24,7 @@
     <h1>Welcome to your dashboard {{user.email}}</h1>
 {% endif %}
 
-{% with total_images_created=request.user.user_images.count %}
+{% with total_images_created=paginator.count %}
 
 <p>Welcome to your dashboard. You have bookmarked 
 {{ total_images_created }} image{{ total_images_created|pluralize }}.</p>
@@ -32,6 +33,40 @@
 
 <p>Drag the following button to your bookmarks toolbar to bookmark images from other websites → 
 <a href="javascript:{% include "images/bookmarklet_launcher.js" %}" class="button">Bookmark it</a></p>
-<p>You can also <a href="{% url "profiles:edit_profiles" %}">edit your profile</a> or <a href="{% url "password_change" %}">change your password</a>.</p>
+<p>You can also <a href="{% url "profiles:edit_profiles" %}">
+  edit your profile</a> or <a href="{% url "password_change" %}">
+  change your password</a>.
+</p>
+
+<div id="image-list-div">
+  {% include "profiles/list_ajax.html" %}
+</div>
 
 {% endblock content %}
+
+
+{% block domready %}
+
+var page = 1;
+var empty_page = false;
+var block_request = false;
+
+$(window).scroll(function() {
+    var margin = $(document).height() - $(window).height() - 200;
+    if($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+        block_request = true;
+        page += 1;
+        $.get('?page=' + page, function(data) {
+            if(data == '') {
+                empty_page = true;
+            }
+            else {
+                block_request = false;
+                $('#image-list-div').append(data);
+                }
+        });
+    }
+
+});
+
+{% endblock domready %}
