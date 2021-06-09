@@ -25,10 +25,10 @@
     <a href="#" data-id="{{ this_user.id }}" data-action="{% if request.user in this_user.rel_to.all %}un{% endif %}follow" class="follow button">
       {% if request.user == this_user %}
         <!-- Do nothing -->
-      {% elif following %}
+      {% elif request.user in this_user.rel_to.all %}
         <button class="hover-btn follow-unfollow" type="submit", value="Login">Unfollow</button>
       {% else %}
-        <button class="hover-btn follow-unfollow" type="submit", value="Login">Follow</button>
+        <button class="hover-btn follow-unfollow" type="submit", value="Login">Follow {{this_user.rel_to.all}}</button>
       {% endif %}
     </a>
     

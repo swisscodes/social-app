@@ -42,6 +42,11 @@
       {% if action.target %}
         {% with target=action.target %}
           <a href="{{ target.get_absolute_url }}">{{ target }}</a>
+          {% if target.url %}
+            <a href="{{ target.get_absolute_url }}">
+              <img src="{{ target.url }}">
+            </a>
+          {% endif %}
         {% endwith %}
       {% endif %}
     </p>

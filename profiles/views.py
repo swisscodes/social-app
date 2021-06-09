@@ -18,7 +18,6 @@ from common.decorators import ajax_required
 @login_required
 def dashboard(request):
     current_user_images = request.user.user_images.all().order_by("-created")
-
     paginator = Paginator(current_user_images, 10)
     page = request.GET.get("page")
     try:
@@ -68,6 +67,7 @@ def edit_profile(request):
 @login_required
 def user_list(request):
     users = User.objects.filter(is_active=True)
+    users = users.select_related("user_profile")
     context = {"section": "people", "users": users}
     return render(request, "profiles/user_list.html", context)
 
@@ -75,15 +75,19 @@ def user_list(request):
 @login_required
 def user_detail(request, nickname):
     try:
-        this_user = User.objects.get(user_profile__nickname=nickname, is_active=True)
+        this_user = (
+            User.objects.select_related("user_profile")
+            .prefetch_related("rel_to")
+            .get(user_profile__nickname=nickname, is_active=True)
+        )
     except User.DoesNotExist:
         return HttpResponse("Page does not exist")
     if request.user in this_user.rel_to.all():
         following = True
-        print(True)
+        print("Following you", following)
     else:
         following = False
-        print(False)
+        print("following you", following)
     context = {
         "section": "people",
         "this_user": this_user,
