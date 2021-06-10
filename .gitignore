@@ -155,3 +155,7 @@ Thumbs.db
 
 # profiling data
 .prof
+
+# certificates
+
+cert*
