@@ -17,11 +17,13 @@ def login_page(request):
             user_field = None
             try:
                 user_field = get_user_model().objects.get(
-                    user_profile__nickname=cd["username"]
+                    user_profile__nickname=cd["username"].lower()
                 )
             except get_user_model().DoesNotExist:
                 try:
-                    user_field = get_user_model().objects.get(email=cd["username"])
+                    user_field = get_user_model().objects.get(
+                        email=cd["username"].lower()
+                    )
                 except get_user_model().DoesNotExist:
                     pass
             if user_field:
@@ -66,7 +68,7 @@ def sign_up(request):
         new_signed_up = CustomUserCreationForm(request.POST)
         if new_signed_up.is_valid():
             new_signed_up.save()
-
+            # create_action(new_signed_up, "has created an account")
             context = {"new_signed_up": new_signed_up}
             return render(request, "registration/register_done.html")
     section = "signup"
