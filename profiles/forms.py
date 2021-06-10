@@ -25,3 +25,7 @@ class ProfileForm(forms.ModelForm):
             "phone": Input(attrs={"type": "tel", "placeholder": "204873623"}),
             "date_of_birth": DateInput(attrs={"type": "date"}),
         }
+
+    def clean_nickname(self):
+        make_nick_lower = self.cleaned_data["nickname"].lower()
+        return make_nick_lower
