@@ -3,7 +3,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 from django.db.models.signals import post_save
-from images.models import Contact
+
 
 # Create your models here.
 
@@ -24,9 +24,6 @@ class Person_profile(models.Model):
     address2 = models.CharField(blank=True, null=True, max_length=50)
     phone = models.CharField(blank=True, null=True, max_length=25)
     zipcode = models.CharField(blank=True, null=True, max_length=10)
-    following = models.ManyToManyField(
-        "self", through=Contact, related_name="followers", symmetrical=False
-    )
 
     class Meta:
         verbose_name = "Users profile"

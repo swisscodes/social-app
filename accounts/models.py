@@ -3,6 +3,22 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 # Create your models here.
+class Contact(models.Model):
+    user_from = models.ForeignKey(
+        "accounts.User", related_name="you_follow", on_delete=models.CASCADE
+    )
+    user_to = models.ForeignKey(
+        "accounts.User", related_name="follow_you", on_delete=models.CASCADE
+    )
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ("-created",)
+
+    def __str__(self):
+        return f"{self.user_from} follows {self.user_to}"
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
@@ -32,6 +48,9 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    following = models.ManyToManyField(
+        "self", through=Contact, related_name="followers", symmetrical=False
+    )
 
     class Meta:
         verbose_name = "User"

@@ -3,7 +3,7 @@
 {% block title %}Welcome Social{% endblock title %}
 
 {% block content%}
-{% if user.is_authenticated %}
+{% if request.user.is_authenticated %}
  <div class="home-msg"><h1>Welcome {{user.email}}</h1></div>
   <a href="{% url "logout" %}"><button class="hover-btn">Logout</button></a>
 

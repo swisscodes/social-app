@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from .forms import ProfileForm
 from django.http import JsonResponse
-from images.models import Contact
+from accounts.models import Contact
 from common.decorators import ajax_required
 
 
@@ -66,8 +66,7 @@ def edit_profile(request):
 
 @login_required
 def user_list(request):
-    users = User.objects.filter(is_active=True)
-    users = users.select_related("user_profile")
+    users = User.objects.select_related("user_profile").filter(is_active=True)
     context = {"section": "people", "users": users}
     return render(request, "profiles/user_list.html", context)
 
@@ -77,21 +76,14 @@ def user_detail(request, nickname):
     try:
         this_user = (
             User.objects.select_related("user_profile")
-            .prefetch_related("rel_to")
+            .prefetch_related("user_images")
             .get(user_profile__nickname=nickname, is_active=True)
         )
     except User.DoesNotExist:
         return HttpResponse("Page does not exist")
-    if request.user in this_user.rel_to.all():
-        following = True
-        print("Following you", following)
-    else:
-        following = False
-        print("following you", following)
     context = {
         "section": "people",
         "this_user": this_user,
-        "in_or_out": following,
     }
     return render(request, "profiles/user_detail.html", context)
 

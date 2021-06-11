@@ -16,19 +16,19 @@
   {% endif %}
   </div>
 
-{% with total_followers=this_user.rel_to.count %}
+{% with total_followers=this_user.follow_you.count %}
   <span class="count">
     <span class="total">{{ total_followers }}</span>
       follower{{ total_followers|pluralize }}
     </span>
     
-    <a href="#" data-id="{{ this_user.id }}" data-action="{% if request.user in this_user.rel_to.all %}un{% endif %}follow" class="follow button">
+    <a href="#" data-id="{{ this_user.id }}" data-action="{% if request.user in this_user.follow_you.all %}un{% endif %}follow" class="follow button">
       {% if request.user == this_user %}
         <!-- Do nothing -->
-      {% elif request.user in this_user.rel_to.all %}
-        <button class="hover-btn follow-unfollow" type="submit", value="Login">Unfollow</button>
+      {% elif request.user in this_user.follow_you.all %}
+        <button class="hover-btn follow-unfollow">Unfollow</button>
       {% else %}
-        <button class="hover-btn follow-unfollow" type="submit", value="Login">Follow {{this_user.rel_to.all}}</button>
+        <button class="hover-btn follow-unfollow">Follow {{this_user.follow_you.all}}</button>
       {% endif %}
     </a>
     

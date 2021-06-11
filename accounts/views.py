@@ -67,8 +67,13 @@ def sign_up(request):
     if request.method == "POST":
         new_signed_up = CustomUserCreationForm(request.POST)
         if new_signed_up.is_valid():
+            username = new_signed_up.cleaned_data["email"]
+            password = new_signed_up.cleaned_data["password1"]
             new_signed_up.save()
-            # create_action(new_signed_up, "has created an account")
+            new_signed_up = authenticate(username=username, password=password)
+            login(request, new_signed_up)
+            messages.info(request, "Thanks for registering. You are now logged in.")
+            create_action(new_signed_up, "has created an account")
             context = {"new_signed_up": new_signed_up}
             return render(request, "registration/register_done.html")
     section = "signup"
