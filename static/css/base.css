@@ -21,6 +21,7 @@ body {
     font-family: 'Poppins', sans-serif;
     font-family: 'Farro', sans-serif;
     color:#212121;
+    min-width: 100%;
 }
 
 li {
