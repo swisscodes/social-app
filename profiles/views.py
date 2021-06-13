@@ -106,6 +106,7 @@ def user_follow(request):
                 Contact.objects.filter(
                     user_from=request.user, user_to=this_user
                 ).delete()
+                create_action(request.user, "Unfollows", this_user)
             return JsonResponse({"status": "ok"})
         except User.DoesNotExist:
             return JsonResponse({"status": "error"})

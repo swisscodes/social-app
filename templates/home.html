@@ -4,8 +4,14 @@
 
 {% block content%}
 {% if request.user.is_authenticated %}
- <div class="home-msg"><h1>Welcome {{user.email}}</h1></div>
-  <a href="{% url "logout" %}"><button class="hover-btn">Logout</button></a>
+ <div class="home-msg"><h1>Welcome {{user.user_profile.nickname}}</h1></div>
+  <pre class="notice-msg">
+    Some of the links like the one below or on the image details
+    are not working because i am using redis
+    and i need to pay to use the service which ill do later.
+    Thank you for visiting
+  </pre>
+  <a href="{% url "images:ranking" %}"><button class="hover-btn">Most Viewed</button></a>
 
   <h2>What's happening</h2>
   <div id="action-list">

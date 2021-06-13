@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.dispatch import receiver
 from django.urls import reverse
-from django.db.models.signals import post_save
 
 
 # Create your models here.
@@ -43,11 +41,3 @@ class Person_profile(models.Model):
 
     def get_absolute_url(self):
         return reverse("add_later", kwargs={"pk": self.pk})
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_prolile_for_new_user(sender, created, instance, **kwarg):
-    nickname = instance.email.rsplit("@", 1)[0].lower()
-    if created:
-        profile = Person_profile(user=instance, nickname=nickname)
-        profile.save()

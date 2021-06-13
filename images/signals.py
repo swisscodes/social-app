@@ -7,3 +7,10 @@ from .models import Image
 def users_like_changed(sender, instance, **kwargs):
     instance.total_likes = instance.users_like.count()
     instance.save()
+
+
+""" make sure you register you signals in apps.py with below function
+# this way
+def ready(self):
+    import images.signals
+"""

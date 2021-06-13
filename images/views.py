@@ -83,12 +83,28 @@ def image_detail_view(request, id, slug):
 
     # increment total image views by 1
     total_views = r.incr(f"image:{this_image.id}:views", 1)
+    # increment image ranking by 1
+    # name of set, increamentby, objects of set
+    r.zincrby("image_ranking", 1, this_image.id)
     context = {
         "this_image": this_image,
         "section": "images",
         "total_views": total_views,
     }
     return render(request, "images/image_detail_view.html", context)
+
+
+@login_required
+def image_ranking(request):
+    # get image ranking dictionary
+    # the the_set, 0 starts from lowest, -1 to the last, desc=True descending order
+    image_ranking = r.zrange("image_ranking", 0, -1, desc=True)[:10]
+    image_ranking_ids = [int(id) for id in image_ranking]
+    # get most viewed images
+    most_viewed = list(Image.objects.filter(id__in=image_ranking_ids))
+    most_viewed.sort(key=lambda x: image_ranking_ids.index(x.id))
+    context = {"section": "images", "most_viewed": most_viewed}
+    return render(request, "images/ranking.html", context)
 
 
 @ajax_required
@@ -98,7 +114,6 @@ def image_like(request):
     image_id = request.POST.get("id")
     action = request.POST.get("action")
     if image_id and action:
-        print(action)
         try:
             this_image = Image.objects.get(id=image_id)
             if action == "like":

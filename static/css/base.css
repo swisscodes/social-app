@@ -3,6 +3,7 @@
     --light: #EEEEEE;
     --dark: #212121;
     --success: #04aa6d;
+    --error: #FF5252;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Farro:wght@300&family=Lato&family=Poppins:wght@300&display=swap');
@@ -20,6 +21,15 @@ body {
     font-family: 'Poppins', sans-serif;
     font-family: 'Farro', sans-serif;
     color:#212121;
+}
+
+li {
+    list-style-position: inside;
+}
+
+.notice-msg {
+    color: var(--error);
+    margin: 5px;
 }
 
 
@@ -361,6 +371,7 @@ a.like-button {
    width: fit-content;
    justify-content: center;
 }
+
 
   /**************************LAPTOP SCREEN MEDIA SCREEN @ *******************/
   @media only screen and (min-width: 1043px) {
