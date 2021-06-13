@@ -10,7 +10,7 @@ class ImageForm(forms.ModelForm):
         model = Image
         fields = ("title", "url", "description")
 
-        widgets = {"url": forms.HiddenInput}
+        # widgets = {"url": forms.HiddenInput}
 
         def clean_url(self):
             url = self.cleaned_data["url"]

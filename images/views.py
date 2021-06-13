@@ -65,6 +65,7 @@ def image_post_get(request):
             }
             messages.success(request, "Image added successfully")
             return redirect(new_item.get_absolute_url())
+
     form = ImageForm(data=request.GET)
     section = "images"
     context = {

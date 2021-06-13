@@ -33,9 +33,10 @@
 
 <p>Drag the following button to your bookmarks toolbar to bookmark images from other websites → 
 <a href="javascript:{% include "images/bookmarklet_launcher.js" %}" class="button">Bookmark it</a></p>
-<p>You can also <a href="{% url "profiles:edit_profiles" %}">
-  edit your profile</a> or <a href="{% url "password_change" %}">
-  change your password</a>.
+<p>Or click here to upload a link manually → 
+  <a href="{% url "images:image_create" %}">
+    <button class="hover-btn">Bookmark</button>
+  </a>
 </p>
 
 <div id="image-list-div">
