@@ -28,8 +28,10 @@ li {
 }
 
 .notice-msg {
+    display: block;
     color: var(--error);
-    margin: 5px;
+    width: 300px;
+    margin: 10px;
 }
 
 
