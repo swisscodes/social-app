@@ -21,6 +21,7 @@ class Image(models.Model):
     created = models.DateField(
         auto_now_add=True, db_index=True
     )  # Since you use auto_now_add, this datetime is automatically set when the object is created.
+    total_likes = models.PositiveIntegerField(db_index=True, default=0)
 
     def __str__(self):
         return self.title

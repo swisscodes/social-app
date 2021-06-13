@@ -81,9 +81,11 @@ def user_detail(request, nickname):
         )
     except User.DoesNotExist:
         return HttpResponse("Page does not exist")
+    follow_you = this_user.follow_you.filter(user_from=request.user).exists()
     context = {
         "section": "people",
         "this_user": this_user,
+        "follow_you": follow_you,
     }
     return render(request, "profiles/user_detail.html", context)
 

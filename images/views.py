@@ -10,6 +10,14 @@ from common.decorators import ajax_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from actions.utils import create_action
+from django.conf import settings
+import redis
+
+
+r = redis.Redis(
+    host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB
+)
+
 
 # Create your views here.
 
@@ -72,9 +80,13 @@ def image_detail_view(request, id, slug):
         this_image = Image.objects.get(id=id, slug=slug)
     except Image.DoesNotExist:
         return HttpResponse("Page does not exist")
+
+    # increment total image views by 1
+    total_views = r.incr(f"image:{this_image.id}:views", 1)
     context = {
         "this_image": this_image,
         "section": "images",
+        "total_views": total_views,
     }
     return render(request, "images/image_detail_view.html", context)
 

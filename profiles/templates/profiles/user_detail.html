@@ -22,13 +22,13 @@
       follower{{ total_followers|pluralize }}
     </span>
     
-    <a href="#" data-id="{{ this_user.id }}" data-action="{% if request.user in this_user.follow_you.all %}un{% endif %}follow" class="follow button">
+    <a href="#" data-id="{{ this_user.id }}" data-action="{% if follow_you %}un{% endif %}follow" class="follow button">
       {% if request.user == this_user %}
         <!-- Do nothing -->
-      {% elif request.user in this_user.follow_you.all %}
+      {% elif follow_you %}
         <button class="hover-btn follow-unfollow">Unfollow</button>
       {% else %}
-        <button class="hover-btn follow-unfollow">Follow {{this_user.follow_you.all}}</button>
+        <button class="hover-btn follow-unfollow">Follow</button>
       {% endif %}
     </a>
     

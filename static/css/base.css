@@ -63,6 +63,28 @@ a.no-deco {
     height: fit-content;
 }
 
+
+
+
+.likes-wrap {
+    display: flex;
+    margin-top: 5px;
+    gap: 15px;
+    align-items: center;
+}
+
+.views-count {
+    display: flex;
+    align-items: center;
+    border: solid 2px var(--success);
+    border-radius: 8px;
+    height: 40px;
+    padding: 5px;
+    width: fit-content;
+}
+
+
+/********************* menu navbar*/
 nav {
      display:grid;
      grid-template-columns: 1fr 1fr;
