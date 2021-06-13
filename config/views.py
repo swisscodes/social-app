@@ -10,7 +10,6 @@ def home_page(request):
             actions = Action.objects.filter(user_id__in=following_ids).exclude(
                 user=request.user
             )
-            print(following_ids)
             # If user is following others, retrieve only their actions
             actions = actions.select_related("user", "user__user_profile")[
                 :10
