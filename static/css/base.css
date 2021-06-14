@@ -385,6 +385,22 @@ a.like-button {
    justify-content: center;
 }
 
+.what-is-new {
+    margin-bottom: 5px;
+}
+
+.info {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.home-page-pic {
+    align-self: center;
+}
+
+.action {
+    margin-bottom: 10px;
+}
 
   /**************************LAPTOP SCREEN MEDIA SCREEN @ *******************/
   @media only screen and (min-width: 1043px) {
@@ -422,6 +438,16 @@ a.like-button {
     #image-list-div {
         display: flex;
         flex-flow: wrap;
+    }
+
+    #action-list {
+        display:flex;
+        gap: 10px;
+    }
+
+    .action {
+        border: solid 1px var(--primary);
+        padding: 5px;
     }
     
 }

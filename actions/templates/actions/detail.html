@@ -31,25 +31,25 @@
   </div>
   
   <div class="info">
-    <p>
       <span class="date">{{ action.created|timesince }} ago</span>
-      <br />
-      <a href="{{ user.get_absolute_url }}">
-        {{ user.user_profile.nickname }}
-      </a>
-    
-      {{ action.verb }}
-      {% if action.target %}
-        {% with target=action.target %}
-          <a href="{{ target.get_absolute_url }}">{{ target }}</a>
+      <div>
+        <a href="{{ user.get_absolute_url }}">
+          {{ user.user_profile.nickname }}
+        </a>
+        {{ action.verb }}
+        {% if action.target %}
+          {% with target=action.target %}
+            <a href="{{ target.get_absolute_url }}">{{ target }}</a>
+      </div>
           {% if target.url %}
-            <a href="{{ target.get_absolute_url }}">
-              <img src="{{ target.url }}">
-            </a>
+            <div class="home-page-pic">
+              <a href="{{ target.get_absolute_url }}">
+                <img src="{{ target.url }}">
+              </a>
+            </div>
           {% endif %}
         {% endwith %}
       {% endif %}
-    </p>
   </div>
 
 </div>
