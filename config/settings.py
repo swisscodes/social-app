@@ -40,7 +40,6 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     ".herokuapp.com",
-    "http://0.0.0.0:8000",
 ]
 
 # Application definition
@@ -119,7 +118,7 @@ DATABASES = {
 }
 
 # REDIS
-# local REDIS_HOST = "localhost"
+# Local REDIS_HOST = "localhost"
 REDIS_HOST = "redis"
 REDIS_PORT = 6379
 REDIS_DB = 0

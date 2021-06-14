@@ -16,6 +16,5 @@ def home_page(request):
             ].prefetch_related("target", "user__user_images")[:10]
             context = {"section": "home", "actions": actions}
             return render(request, "home.html", context)
-    print(actions)
     context = {"section": "home", "actions": actions}
     return render(request, "home.html", context)

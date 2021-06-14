@@ -256,15 +256,16 @@ nav {
     border-radius: 3px;
     cursor: pointer;
     outline-style:solid;
-    outline-color: #c7aeae;
+    outline-color: #d4c6c6;
     
 }
 
 .form-p input {
     width: 80%;
     height: 30px;
-    background-color: rgb(225, 188, 235);
+    background-color: rgb(219, 219, 219);
     outline-color: #3996f3;
+    border: solid 1px var(--primary);
     
 }
 
@@ -414,7 +415,7 @@ a.like-button {
     }
 
     .for-form input {
-        width: 60%;
+        width: 50%;
 
     }
 
