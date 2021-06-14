@@ -35,7 +35,13 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = ["mysite.com", "localhost", "127.0.0.1", ".herokuapp.com"]
+ALLOWED_HOSTS = [
+    "mysite.com",
+    "localhost",
+    "127.0.0.1",
+    ".herokuapp.com",
+    "http://0.0.0.0:8000",
+]
 
 # Application definition
 
@@ -113,7 +119,8 @@ DATABASES = {
 }
 
 # REDIS
-REDIS_HOST = "localhost"
+# local REDIS_HOST = "localhost"
+REDIS_HOST = "redis"
 REDIS_PORT = 6379
 REDIS_DB = 0
 

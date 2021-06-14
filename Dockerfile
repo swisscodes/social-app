@@ -15,3 +15,6 @@ RUN pip install pipenv && pipenv install --system
 
 # Copy project
 COPY . /social-docker/
+
+COPY ./entrypoint.sh /
+ENTRYPOINT ["sh", "/entrypoint.sh"]

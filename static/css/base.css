@@ -101,6 +101,8 @@ a.no-deco {
 }
 
 
+
+
 /********************* menu navbar*/
 nav {
      display:grid;
@@ -212,6 +214,9 @@ nav {
 .burger-button.is-active span {
     background-color: var(--primary);
 }
+
+
+
 /*****************************ALL FORMS AND BUTTONS IN FORMS****************/
 
 

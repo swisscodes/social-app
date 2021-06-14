@@ -4,25 +4,40 @@ version: '3'
 services:
   web:
     build: .
-    command: python /social-docker/manage.py runserver 0.0.0.0:8000
     container_name: social-web
     ports:
       - 8000:8000
     volumes:
-      - /staticfiles:/staticfiles/
+      - .:/social-docker
+      - staticfiles:/staticfiles/
     env_file:
       - ./config/.env
     depends_on:
+      - redis
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - staticfiles:/staticfiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+      
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    depends_on:
       - db
+  
   db:
     image: postgres
     container_name: social-docker-db
     volumes:
       - ./data/db:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./config/.env
         
 
 volumes:
