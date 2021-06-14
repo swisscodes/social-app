@@ -443,6 +443,7 @@ a.like-button {
     #action-list {
         display:flex;
         gap: 10px;
+        flex-flow: wrap;
     }
 
     .action {
