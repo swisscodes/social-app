@@ -10,8 +10,9 @@ class LoginForm(forms.Form):
         label="Email or Username",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Username or Email",
-            },
+                "class": "fas fa-user fa-lg",
+                "placeholder": "  Username or Email",
+            }
         ),
     )
     password = forms.CharField(widget=forms.PasswordInput)
