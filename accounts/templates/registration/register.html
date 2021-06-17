@@ -9,11 +9,28 @@
 {% else %}
   <div class="form-wrapper">
     <form class="for-form" action="" method="POST">
-        <div class="form-p">
+      <div class="form-p">
           {% csrf_token %}
-          {{form}}
+          
+          <label for="id_email"><b>Email</b></label>
+          {% for msg in form.email.errors %}
+            <div class="error-div"><span>{{msg}}</span></div>
+          {% endfor %}
+          <span class="user-span"><i class="fa fa-envelope icon"></i><input type="text" placeholder=" Enter Username" name="email" required></span>
+
+          <label for="id_password1"><b>Password</b></label>
+          {% for msg in form.password1.errors %}
+            <div class="error-div"><span>{{msg}}</span></div>
+          {% endfor %}
+          <span class="user-span"><i class="fa fa-key icon"></i><input type="password" placeholder=" Enter password" name="password1" required></span>
+
+          <label for="id_password2"><b>Password confirmation</b></label>
+          {% for msg in form.password2.errors %}
+            <div class="error-div"><span>{{msg}}</span></div>
+          {% endfor %}
+          <span class="user-span"><i class="fa fa-key icon"></i><input type="password" placeholder=" Confirm password" name="password2" required></span>
           <button class="hover-btn" type="submit", value="Login">Sign up</button>
-        </div>
+      </div>
       </form>
   </div>
 {% endif %}
