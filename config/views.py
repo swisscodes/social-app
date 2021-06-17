@@ -18,3 +18,7 @@ def home_page(request):
             return render(request, "home.html", context)
     context = {"section": "home", "actions": actions}
     return render(request, "home.html", context)
+
+
+def google(request):
+    return render(request, "google.html")

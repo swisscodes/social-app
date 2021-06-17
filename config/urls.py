@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from .views import home_page
+from .views import home_page, google
 import debug_toolbar
 
 
@@ -31,6 +31,7 @@ urlpatterns = [
     path("images/", include("images.urls")),
     path("social-auth/", include("social_django.urls", namespace="social")),
     path("actions/", include("actions.urls")),
+    path("google48bd223165802762.html/", google, name="google"),
 ]
 
 if settings.DEBUG:

@@ -1,6 +1,6 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
-from .views import login_page, logout_page, sign_up, google
+from .views import login_page, logout_page, sign_up
 
 
 app_name = "accounts"
@@ -9,7 +9,6 @@ urlpatterns = [
     path("login/", login_page, name="login"),
     path("logout/", logout_page, name="logout"),
     path("signup/", sign_up, name="signup"),
-    path("google48bd223165802762.html/", google, name="google")
     # Django also provides the authentication URL patterns that you just created. You
     # can comment out the authentication URL patterns that you added to the urls.py
     # file of the account application and include django.contrib.auth.urls instead,
