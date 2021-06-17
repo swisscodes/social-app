@@ -120,3 +120,7 @@ def logout_page(request):
     context = {"logged_user": logged_user}
     logout(request)
     return render(request, "registration/logout.html", context)
+
+
+def google(request):
+    return render(request, "accounts/google.html")

@@ -300,11 +300,11 @@ form img {
     align-items: center;
     border: solid 1px #0069D9;
     background-color: whitesmoke;
+    width: 100%;
 }
 .user-span input {
     outline: none;
     border: none;
-    margin-left: 3px;
 }
 
 .user-span i {
@@ -478,8 +478,8 @@ a.like-button {
 
     }
     
-    .user-span input {
-        width: fit-content;
+    .user-span {
+        width: 65%;
     }
     
 
