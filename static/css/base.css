@@ -260,10 +260,21 @@ nav {
     
 }
 
+.form-input-container {
+    display: flex;
+    flex-flow: column wrap;
+    width: 80%;
+    align-content: center;
+}
+
+.form-input-container label {
+    text-align: center;
+    margin: 10px;
+}
+
 .form-p input {
     width: 80%;
     height: 30px;
-    background-color: rgb(219, 219, 219);
     outline-color: #3996f3;
     border: solid 1px var(--primary);
     
@@ -283,6 +294,25 @@ form img {
     width: 100%;
     height: auto;
 }
+
+.user-span {
+    display: flex;
+    align-items: center;
+    border: solid 1px #0069D9;
+    background-color: whitesmoke;
+}
+.user-span input {
+    outline: none;
+    border: none;
+    margin-left: 3px;
+}
+
+.user-span i {
+    color: var(--success);
+    background: rgb(188, 205, 236);
+    
+}
+
 
 
 /*##################### ANY BUTTON WRAPPED WITH <a>*/
@@ -392,6 +422,9 @@ a.like-button {
 .info {
     display: flex;
     flex-flow: column wrap;
+    align-items: center;
+    padding: 2px;
+    margin-bottom: 5px;
 }
 
 .home-page-pic {
@@ -399,6 +432,9 @@ a.like-button {
 }
 
 .action {
+    border: solid 1px var(--primary);
+    padding: 5px;
+    height: fit-content;
     margin-bottom: 10px;
 }
 
@@ -441,6 +477,11 @@ a.like-button {
         width: 50%;
 
     }
+    
+    .user-span input {
+        width: fit-content;
+    }
+    
 
     #image-list-div {
         display: flex;
@@ -451,13 +492,12 @@ a.like-button {
         display:flex;
         gap: 10px;
         flex-flow: wrap;
-        max-width: fit-content;
-        max-height: fit-content;
+        
+        
     }
 
     .action {
-        border: solid 1px var(--primary);
-        padding: 5px;
+        margin-bottom: 0px;
     }
 
 }

@@ -81,12 +81,14 @@ def image_detail_view(request, id, slug):
         this_image = Image.objects.get(id=id, slug=slug)
     except Image.DoesNotExist:
         return HttpResponse("Page does not exist")
-
-    # increment total image views by 1
-    total_views = r.incr(f"image:{this_image.id}:views", 1)
-    # increment image ranking by 1
-    # name of set, increamentby, objects of set
-    r.zincrby("image_ranking", 1, this_image.id)
+    total_views = r.incr(f"image:{this_image.id}:views", 0)
+    user_just_viewed = r.sadd(f"{this_image.id}", f"{request.user.id}")
+    if user_just_viewed:
+        # increment total image views by 1
+        total_views = r.incr(f"image:{this_image.id}:views", 1)
+        # increment image ranking by 1
+        # name of set, increamentby, objects of set
+        r.zincrby("image_ranking", 1, this_image.id)
     context = {
         "this_image": this_image,
         "section": "images",

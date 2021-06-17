@@ -2,46 +2,42 @@
 {% load thumbnail %}
 
 {% block title %}
-{% if user.user_profile.first_name %}
-    Welcome to your dashboard {{user.user_profile.first_name}}
-{% elif user.user_profile.username  %}
-    Welcome to your dashboard {{user.user_profile.username}}
-{% else %}
-    Welcome to your dashboard {{user.email}}
-{% endif %}
+    {% if user.user_profile.first_name %}
+        Welcome to your dashboard {{user.user_profile.first_name}}
+    {% else %}
+        Welcome to your dashboard {{user.user_profile.nickname}}
+    {% endif %}
 {% endblock title %}
 
 
 {% block content %}
-{% for msg in messages %}
-<div class="error-div"><span>{{msg}}</span></div>
-{% endfor %}
-{% if user.user_profile.first_name %}
-    <h1>Welcome to your dashboard {{user.user_profile.first_name}}</h1>
-{% elif user.user_profile.username  %}
-    <h1>Welcome to your dashboard {{user.user_profile.username}}</h1>
-{% else %}
-    <h1>Welcome to your dashboard {{user.email}}</h1>
-{% endif %}
+    {% for msg in messages %}
+    <div class="error-div"><span>{{msg}}</span></div>
+    {% endfor %}
 
-{% with total_images_created=paginator.count %}
+    {% if user.user_profile.first_name %}
+        <h1>Welcome to your dashboard {{user.user_profile.first_name}}</h1>
+    {% else %}
+        <h1>Welcome to your dashboard {{user.user_profile.nickname}}</h1>
+    {% endif %}
 
-<p>Welcome to your dashboard. You have bookmarked 
-{{ total_images_created }} image{{ total_images_created|pluralize }}.</p>
+    {% with total_images_created=paginator.count %}
+        <p>Welcome to your dashboard. You have bookmarked 
+        {{ total_images_created }} image{{ total_images_created|pluralize }}.</p>
+    {% endwith %}
 
-{% endwith %}
+    <p>Drag the following button to your bookmarks toolbar to bookmark images from other websites → 
+      <a href="javascript:{% include "images/bookmarklet_launcher.js" %}" class="button">Bookmark it</a>
+    </p>
+    <p>Or click here to upload a link manually → 
+      <a href="{% url "images:image_create" %}">
+        <button class="hover-btn">Bookmark</button>
+      </a>
+    </p>
 
-<p>Drag the following button to your bookmarks toolbar to bookmark images from other websites → 
-<a href="javascript:{% include "images/bookmarklet_launcher.js" %}" class="button">Bookmark it</a></p>
-<p>Or click here to upload a link manually → 
-  <a href="{% url "images:image_create" %}">
-    <button class="hover-btn">Bookmark</button>
-  </a>
-</p>
-
-<div id="image-list-div">
-  {% include "profiles/list_ajax.html" %}
-</div>
+    <div id="image-list-div">
+      {% include "profiles/list_ajax.html" %}
+    </div>
 
 {% endblock content %}
 

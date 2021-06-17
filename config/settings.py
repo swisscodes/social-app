@@ -73,11 +73,11 @@ AUTH_USER_MODEL = "accounts.User"
 MIDDLEWARE = [
     # 3rd Party Middleware
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # 3rd Party Middleware
+    #############################
     "django.middleware.security.SecurityMiddleware",
     # 3rd Party Middleware
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    # 3rd Party Middleware
+    ##############################
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -118,8 +118,8 @@ DATABASES = {
 }
 
 # REDIS
-# Local REDIS_HOST = "localhost"
-REDIS_HOST = "redis"
+REDIS_HOST = "localhost"
+# REDIS_HOST = "redis"
 REDIS_PORT = 6379
 REDIS_DB = 0
 

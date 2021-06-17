@@ -32,7 +32,6 @@
   
   <div class="info">
       <span class="date">{{ action.created|timesince }} ago</span>
-      <div>
         <a href="{{ user.get_absolute_url }}">
           {{ user.user_profile.nickname }}
         </a>
@@ -40,13 +39,10 @@
         {% if action.target %}
           {% with target=action.target %}
             <a href="{{ target.get_absolute_url }}">{{ target }}</a>
-      </div>
           {% if target.url %}
-            <div class="home-page-pic">
-              <a href="{{ target.get_absolute_url }}">
-                <img src="{{ target.url }}">
-              </a>
-            </div>
+            <a href="{{ target.get_absolute_url }}">
+              <img src="{{ target.url }}">
+            </a>
           {% endif %}
         {% endwith %}
       {% endif %}
