@@ -77,8 +77,7 @@
         action: $(this).data('action')
       },
       function(data){
-        if (data['status'] == 'ok')
-        {
+        if (data['status'] == 'ok') {
           var previous_action = $('a.like').data('action');
 
           // toggle data-action
@@ -88,7 +87,7 @@
           // toggle link text
           //$('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
           $('a.like').load(location.href + " .like");
-        }
+        };
       }
     );
   });

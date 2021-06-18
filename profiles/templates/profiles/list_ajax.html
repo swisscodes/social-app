@@ -1,22 +1,24 @@
 {% load thumbnail %}
+
 {% for image in current_user_images %}
-
-<div class="image">
-  <div class="info">
-    <a href="{{ image.get_absolute_url }}" class="title">
-      {{ image.title }}
-    </a>
-  </div>
-
-  <div class="dashboard-image">
-    <a href="{{ image.get_absolute_url }}">
-      {% thumbnail image.image 300x300 crop="smart" as im %}
-      <a href="{{ image.get_absolute_url }}">
-        <img src="{{ image.url }}">
+  <div class="image">
+    <div class="info">
+      <a href="{{ image.get_absolute_url }}" class="title">
+        {{ image.title }}
       </a>
-    </a>
+    </div>
+
+    <div class="dashboard-image">
+      <a href="{{ image.get_absolute_url }}">
+        {% thumbnail image.image 300x300 crop="smart" as im %}
+        <a href="{{ image.get_absolute_url }}">
+          <img src="{{ image.url }}">
+        </a>
+      </a>
+    </div>
+    <div class="edit-delete-div">
+      <button class="hover-btn dashboard-btn" type="button">Edit</button>
+      <button class="hover-btn dashboard-btn" type="button">Delete</button>
+    </div>
   </div>
-
-</div>
-
 {% endfor %}

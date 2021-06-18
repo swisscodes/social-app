@@ -17,6 +17,14 @@ from common.decorators import ajax_required
 
 @login_required
 def dashboard(request):
+    if request.is_ajax() and "action" in request.POST:
+        obj = request.POST.get("obj")
+        action = request.POST.get("action")
+        if action == "edit":
+            return JsonResponse({"status": "edit"})
+        elif action == "delete":
+            request.user.user_images.get(id=obj).delete()
+            return JsonResponse({"status": "deleted"})
     current_user_images = request.user.user_images.all().order_by("-created")
     paginator = Paginator(current_user_images, 10)
     page = request.GET.get("page")

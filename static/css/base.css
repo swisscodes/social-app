@@ -4,6 +4,7 @@
     --dark: #212121;
     --success: #04aa6d;
     --error: #FF5252;
+    --btn: #3a9ef5;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Farro:wght@300&family=Lato&family=Poppins:wght@300&display=swap');
@@ -445,6 +446,22 @@ a.like-button {
     border-radius: 5px;
 }
 
+/*######################DASHBOARD####################*/
+.edit-delete-div {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+
+}
+
+.dashboard-btn {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 10px;
+    color: whitesmoke;
+    background-color: var(--btn);
+}
   /**************************LAPTOP SCREEN MEDIA SCREEN @ *******************/
   @media only screen and (min-width: 1043px) {
     /*body {

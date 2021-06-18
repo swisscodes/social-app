@@ -44,6 +44,66 @@
 
 {% block domready %}
 
+function btnAndScrool() {
+    $(".dashboard-btn").click(function(e) {
+    e.preventDefault();
+    let obj = $(this).closest(".image").find("a").prop("href");
+    obj = obj.split("/");
+    let text = $(this).text().toLowerCase();
+    console.log(text);
+    console.log(obj[5]);
+    if(text === "edit") {
+      $.post("{% url "profiles:dashboard" %}",
+      {
+        obj: obj[5],
+        action: text
+      },
+      function(data) {
+        console.log(data);
+      })
+      console.log("you can edit")
+    }else if(text === "delete") {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        console.log(result)
+        if (result.isConfirmed) {
+          $.post("{% url "profiles:dashboard" %}",
+          {
+            obj: obj[5],
+            action: text
+          },
+          function(data) {
+            if(data["status"]==="deleted") {
+              location.reload()
+              console.log("i deleted")
+            }
+          })
+          console.log("you can delete")
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+            );
+          }
+      })// end of swal
+    };//end of if else
+  });//close click function here
+
+}//function declaration end
+
 var page = 1;
 var empty_page = false;
 var block_request = false;
@@ -60,10 +120,10 @@ $(window).scroll(function() {
             else {
                 block_request = false;
                 $('#image-list-div').append(data);
-                }
+                btnAndScrool();   
+            }
         });
     }
-
-});
-
+});//window select code end here
+btnAndScrool();
 {% endblock domready %}
