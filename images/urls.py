@@ -13,6 +13,7 @@ app_name = "images"
 urlpatterns = [
     path("", image_list_view, name="list_view"),
     path("create/", image_post_get, name="image_create"),
+    # path("edit/<int:obj_instance>", image_post_get, "image_edit"),
     path("<slug:slug>/<int:img_pk>", image_post_get, name="image_details"),
     path("detail/<int:id>/<slug:slug>", image_detail_view, name="detail_view"),
     path("like/", image_like, name="like"),

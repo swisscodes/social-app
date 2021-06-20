@@ -48,7 +48,7 @@ def image_list_view(request):
 
 
 @login_required
-def image_post_get(request):
+def image_post_get(request, obj_instance=None):
     if request.method == "POST":
         form = ImageForm(
             data=request.POST,
@@ -65,12 +65,27 @@ def image_post_get(request):
             }
             messages.success(request, "Image added successfully")
             return redirect(new_item.get_absolute_url())
+    if request.is_ajax() and "action" in request.POST:
+        obj = request.POST.get("obj")
+        action = request.POST.get("action")
+        if action == "edit":
+            form = ImageForm(data=request.POST)
+            if form.is_valid():
+                form.save()
+                return JsonResponse({"status": "saved"})
+    if obj_instance:
+        obj = request.user.user_images.get(id=obj_instance)
+        form = ImageForm(instance=obj)
+        context = {
+            "form": form,
+            "section": "images",
+        }
+        return render(request, "images/images.html", context)
 
     form = ImageForm(data=request.GET)
-    section = "images"
     context = {
         "form": form,
-        "section": section,
+        "section": "images",
     }
     return render(request, "images/images.html", context)
 

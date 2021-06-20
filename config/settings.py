@@ -40,8 +40,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     ".herokuapp.com",
+    "swiss-social.azurewebsites.net",
 ]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -119,10 +119,10 @@ DATABASES = {
 
 # REDIS
 REDIS_HOST = "localhost"
-# REDIS_HOST = "redis"
+# REDIS_HOST = "redis" #Docker
+# REDIS_HOST = "swissbobo.redis.cache.windows.net"  # azure
 REDIS_PORT = 6379
 REDIS_DB = 0
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

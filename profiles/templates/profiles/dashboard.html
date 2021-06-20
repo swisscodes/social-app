@@ -50,16 +50,16 @@ function btnAndScrool() {
     let obj = $(this).closest(".image").find("a").prop("href");
     obj = obj.split("/");
     let text = $(this).text().toLowerCase();
-    console.log(text);
-    console.log(obj[5]);
     if(text === "edit") {
-      $.post("{% url "profiles:dashboard" %}",
+      $.post("{% url "images:image_create" %}",
       {
         obj: obj[5],
         action: text
       },
       function(data) {
-        console.log(data);
+          if(data["status"]==="saved") {
+              console.log(data);
+          }
       })
       console.log("you can edit")
     }else if(text === "delete") {
@@ -97,6 +97,7 @@ function btnAndScrool() {
             'Your imaginary file is safe :)',
             'error'
             );
+            console.log("cancelled");
           }
       })// end of swal
     };//end of if else

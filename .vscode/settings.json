@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\LENOVO\\.virtualenvs\\social-faD2bMSO\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\LENOVO\\.virtualenvs\\social-faD2bMSO\\Scripts\\python.exe",
+    "appService.defaultWebAppToDeploy": "/subscriptions/cd4def60-cf25-487b-bcb8-7ac6879ecafc/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/swiss-social",
+    "appService.deploySubpath": "."
 }
