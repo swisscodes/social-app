@@ -119,7 +119,7 @@ DATABASES = {
 
 # REDIS
 REDIS_HOST = "localhost"
-# REDIS_HOST = "redis" #Docker
+# REDIS_HOST = "redis"  # Docker
 # REDIS_HOST = "swissbobo.redis.cache.windows.net"  # azure
 REDIS_PORT = 6379
 REDIS_DB = 0

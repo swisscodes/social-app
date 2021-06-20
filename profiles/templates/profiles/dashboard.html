@@ -49,12 +49,12 @@ function btnAndScrool() {
     e.preventDefault();
     let obj = $(this).closest(".image").find("a").prop("href");
     obj = obj.split("/");
-    let text = $(this).text().toLowerCase();
-    if(text === "edit") {
+    let selected = $(this).text().toLowerCase();
+    if(selected === "edit") {
       $.post("{% url "images:image_create" %}",
       {
         obj: obj[5],
-        action: text
+        action: selected
       },
       function(data) {
           if(data["status"]==="saved") {
@@ -62,7 +62,7 @@ function btnAndScrool() {
           }
       })
       console.log("you can edit")
-    }else if(text === "delete") {
+    }else if(selected === "delete") {
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -77,27 +77,30 @@ function btnAndScrool() {
           $.post("{% url "profiles:dashboard" %}",
           {
             obj: obj[5],
-            action: text
+            action: selected
           },
           function(data) {
             if(data["status"]==="deleted") {
-              location.reload()
-              console.log("i deleted")
             }
-          })
-          console.log("you can delete")
+          });
           Swal.fire(
             'Deleted!',
             'Your file has been deleted.',
             'success'
-          )
+          ).then((result) => {
+            location.reload();
+          })
+          setTimeout(()=> location.reload(), 5000);//reload after 5 seconds of waiting
+          
         }else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire(
             'Cancelled',
-            'Your imaginary file is safe :)',
+            'Your precious file is safe :)',
             'error'
             );
-            console.log("cancelled");
+            setTimeout(()=> location.reload(), 5000);//reload after 5 seconds of waiting
+        }else if (result.dismiss === Swal.DismissReason.backdrop) {
+            console.log("backdrop");
           }
       })// end of swal
     };//end of if else
@@ -121,7 +124,7 @@ $(window).scroll(function() {
             else {
                 block_request = false;
                 $('#image-list-div').append(data);
-                btnAndScrool();   
+                btnAndScrool();
             }
         });
     }
