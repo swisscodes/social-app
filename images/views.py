@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse
+from django.http.response import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -48,8 +48,8 @@ def image_list_view(request):
 
 
 @login_required
-def image_post_get(request, obj_instance=None):
-    if request.method == "POST":
+def image_post_get(request, this_obj_id=None):
+    if request.method == "POST" and request.POST["action"] == "upload":
         form = ImageForm(
             data=request.POST,
         )
@@ -58,29 +58,33 @@ def image_post_get(request, obj_instance=None):
             new_item.user = request.user
             new_item.save()
             create_action(request.user, "bookmarked image", new_item)
-            section = "images"
-            context = {
-                "form": form,
-                "section": section,
-            }
             messages.success(request, "Image added successfully")
             return redirect(new_item.get_absolute_url())
-    if request.is_ajax() and "action" in request.POST:
-        obj = request.POST.get("obj")
-        action = request.POST.get("action")
-        if action == "edit":
-            form = ImageForm(data=request.POST)
-            if form.is_valid():
-                form.save()
-                return JsonResponse({"status": "saved"})
-    if obj_instance:
-        obj = request.user.user_images.get(id=obj_instance)
-        form = ImageForm(instance=obj)
+    elif request.method == "POST" and request.POST["action"] == "save":
+        try:
+            this_obj_id = Image.objects.get(id=this_obj_id)
+        except Image.DoesNotExist:
+            raise Http404
+        updated_item = ImageForm(
+            data=request.POST,
+            instance=this_obj_id,
+        )
+        if updated_item.is_valid():
+            updated_item = updated_item.save()
+            return redirect(updated_item.get_absolute_url())
+    if this_obj_id:
+        try:
+            this_obj_id = Image.objects.get(id=this_obj_id)
+        except Image.DoesNotExist:
+            raise Http404
+
+        form = ImageForm(instance=this_obj_id)
         context = {
             "form": form,
             "section": "images",
+            "this_obj_id": this_obj_id,
         }
-        return render(request, "images/images.html", context)
+        return render(request, "images/edit.html", context)
 
     form = ImageForm(data=request.GET)
     context = {
@@ -96,18 +100,18 @@ def image_detail_view(request, id, slug):
         this_image = Image.objects.get(id=id, slug=slug)
     except Image.DoesNotExist:
         return HttpResponse("Page does not exist")
-    total_views = r.incr(f"image:{this_image.id}:views", 0)
-    user_just_viewed = r.sadd(f"{this_image.id}", f"{request.user.id}")
-    if user_just_viewed:
-        # increment total image views by 1
-        total_views = r.incr(f"image:{this_image.id}:views", 1)
-        # increment image ranking by 1
-        # name of set, increamentby, objects of set
-        r.zincrby("image_ranking", 1, this_image.id)
+    # total_views = r.incr(f"image:{this_image.id}:views", 0)
+    # user_just_viewed = r.sadd(f"{this_image.id}", f"{request.user.id}")
+    # if user_just_viewed:
+    # increment total image views by 1
+    # total_views = r.incr(f"image:{this_image.id}:views", 1)
+    # increment image ranking by 1
+    # name of set, increamentby, objects of set
+    # r.zincrby("image_ranking", 1, this_image.id)
     context = {
         "this_image": this_image,
         "section": "images",
-        "total_views": total_views,
+        # "total_views": total_views,
     }
     return render(request, "images/image_detail_view.html", context)
 

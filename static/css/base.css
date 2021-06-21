@@ -446,6 +446,10 @@ a.like-button {
     border-radius: 5px;
 }
 
+.image-preview {
+    width: 193px;
+}
+
 /*######################DASHBOARD####################*/
 .edit-delete-div {
     display: flex;

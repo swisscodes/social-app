@@ -51,7 +51,7 @@ function btnAndScrool() {
     obj = obj.split("/");
     let selected = $(this).text().toLowerCase();
     if(selected === "edit") {
-      $.post("{% url "images:image_create" %}",
+      {% comment %} $.post("{% url "images:image_edit" 0 %}".replace(0, obj[5]),
       {
         obj: obj[5],
         action: selected
@@ -61,7 +61,7 @@ function btnAndScrool() {
               console.log(data);
           }
       })
-      console.log("you can edit")
+      console.log("you can edit", obj[5]) {% endcomment %}
     }else if(selected === "delete") {
       Swal.fire({
         title: 'Are you sure?',
@@ -72,7 +72,6 @@ function btnAndScrool() {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
-        console.log(result)
         if (result.isConfirmed) {
           $.post("{% url "profiles:dashboard" %}",
           {
@@ -102,7 +101,8 @@ function btnAndScrool() {
         }else if (result.dismiss === Swal.DismissReason.backdrop) {
             console.log("backdrop");
           }
-      })// end of swal
+      })// end of swal then
+      setTimeout(()=> location.reload(), 60000);//reload after 1 minute of waiting
     };//end of if else
   });//close click function here
 

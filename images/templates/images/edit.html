@@ -9,9 +9,9 @@
   <form class="for-form" action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-p">
-      <img src="{{ request.GET.url }}" class="image-preview">
+      <img src="{{ this_obj_id.url }}" class="image-preview">
       {{form}}
-      <button class="hover-btn" type="submit" name="action" value="upload">Upload</button>
+      <button class="hover-btn" type="submit" name="action" value="save">Save</button>
     </div>
   </form>
 </div>
