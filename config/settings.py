@@ -232,12 +232,12 @@ if DEBUG == False:
     SECURE_SSL_REDIRECT = True
 
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
 
-sentry_sdk.init(
-    dsn="https://e9c1ee522aa34319823b64a47c1a6cc5@o707697.ingest.sentry.io/5778484",
-    integrations=[DjangoIntegration()],
-    traces_sample_rate=1.0,
-    send_default_pii=True,
-)
+# sentry_sdk.init(
+#     dsn="https://e9c1ee522aa34319823b64a47c1a6cc5@o707697.ingest.sentry.io/5778484",
+#     integrations=[DjangoIntegration()],
+#     traces_sample_rate=1.0,
+#     send_default_pii=True,
+# )
