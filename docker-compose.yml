@@ -10,8 +10,7 @@ services:
     volumes:
       - .:/social-docker
       - staticfiles:/staticfiles/
-    env_file:
-      - ./config/.env
+   
     depends_on:
       - redis
 
@@ -36,8 +35,7 @@ services:
     container_name: social-docker-db
     volumes:
       - ./data/db:/var/lib/postgresql/data/
-    env_file:
-      - ./config/.env
+    
         
 
 volumes:
