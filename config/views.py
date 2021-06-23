@@ -7,7 +7,7 @@ def home_page(request):
     if request.user.is_authenticated:
         following_ids = request.user.following.values_list("id", flat=True)
         if following_ids:
-            actions = Action.objects.filter(user_id__in=following_ids).exclude(
+            actions = Action.objects.filter(user__in=following_ids).exclude(
                 user=request.user
             )
             # If user is following others, retrieve only their actions

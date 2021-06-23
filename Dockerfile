@@ -18,3 +18,5 @@ COPY . /social-docker/
 
 COPY ./entrypoint.sh /
 ENTRYPOINT ["sh", "/entrypoint.sh"]
+
+EXPOSE 8000

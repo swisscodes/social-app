@@ -24,18 +24,23 @@ r = redis.Redis(
 
 @login_required
 def image_list_view(request):
-    all_images = Image.objects.all().order_by("-created")
-    paginator = Paginator(all_images, 10)
-    page = request.GET.get("page")
-
-    try:
-        all_images = paginator.page(page)
-    except PageNotAnInteger:
-        all_images = paginator.page(1)
-    except EmptyPage:
-        if request.is_ajax():
-            return HttpResponse("")
-        all_images = paginator.page(paginator.num_pages)
+    all_images = None
+    following_list_users = request.user.following.values_list("id", flat=True)
+    if following_list_users:
+        all_images = Image.objects.filter(user__in=following_list_users).order_by(
+            "-created"
+        )
+        # all_images = Image.objects.all().order_by("-created")
+        paginator = Paginator(all_images, 10)
+        page = request.GET.get("page")
+        try:
+            all_images = paginator.page(page)
+        except PageNotAnInteger:
+            all_images = paginator.page(1)
+        except EmptyPage:
+            if request.is_ajax():
+                return HttpResponse("")
+            all_images = paginator.page(paginator.num_pages)
     if request.is_ajax():
         context = {"section": "images", "all_images": all_images}
         return render(
@@ -71,6 +76,7 @@ def image_post_get(request, this_obj_id=None):
         )
         if updated_item.is_valid():
             updated_item = updated_item.save()
+            messages.success(request, "Saved Succesfully")
             return redirect(updated_item.get_absolute_url())
     if this_obj_id:
         try:
@@ -100,18 +106,18 @@ def image_detail_view(request, id, slug):
         this_image = Image.objects.get(id=id, slug=slug)
     except Image.DoesNotExist:
         return HttpResponse("Page does not exist")
-    # total_views = r.incr(f"image:{this_image.id}:views", 0)
-    # user_just_viewed = r.sadd(f"{this_image.id}", f"{request.user.id}")
-    # if user_just_viewed:
-    # increment total image views by 1
-    # total_views = r.incr(f"image:{this_image.id}:views", 1)
-    # increment image ranking by 1
-    # name of set, increamentby, objects of set
-    # r.zincrby("image_ranking", 1, this_image.id)
+    total_views = r.incr(f"image:{this_image.id}:views", 0)
+    user_just_viewed = r.sadd(f"{this_image.id}", f"{request.user.id}")
+    if user_just_viewed:
+        # increment total image views by 1
+        total_views = r.incr(f"image:{this_image.id}:views", 1)
+        # increment image ranking by 1
+        # name of set, increamentby, objects of set
+        r.zincrby("image_ranking", 1, this_image.id)
     context = {
         "this_image": this_image,
         "section": "images",
-        # "total_views": total_views,
+        "total_views": total_views,
     }
     return render(request, "images/image_detail_view.html", context)
 
